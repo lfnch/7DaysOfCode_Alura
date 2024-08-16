@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF8">
+		<title>Day 2, Code</title>
+	</head>
+	<style type="text/css">
+		body{
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+		
+		p {
+			text-align: center;
+		}
+
+		form {
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			width: 350px;
+			text-align: center;
+		}
+
+		input {
+			width: 100%;
+			padding: 10px;
+			margin: 10px 0;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-sizing: border-box;
+			font-size: 14px;
+		}
+
+		input:focus {
+			border-color: #007BFF;
+			outline: none;
+			box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+		}
+			
+		button {
+			width: 100%;
+			padding: 10px;
+			margin-top: 10px;
+			background-color: #007BFF;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: #0056b3;
+		}
+	</style>
+	<body>
+		<main>
+			<p><strong>Day 2, Code, Javascript, AluraLatam.</strong></p>
+			<form id="form_datos">
+				<p><strong>Ingrese los siguientes datos</strong></p>
+				<input type="text" id="input_name" placeholder="¿Cuál es tu nombre?" maxlength="50" required>
+				<input type="number" id="input_age" placeholder="¿Cuántos años tienes?" maxlength="50" required>
+				<input type="text" id="input_languaje" placeholder="¿Qué lenguaje de programación estás estudiando?" maxlength="50" required>
+				<button type="submit">Continuar</button>
+			</form>
+		</main>
+		<footer></footer>
+		<script type="text/javascript">
+			//Convertimos en mayusculas todas las palabras
+			function convertStringUppercase(string) {
+				if(string != '') {
+					let string_new = new Array();
+					let string_split = string.split(' ');
+					string_split.forEach(word => {
+						string_new.push(word.toString().toUpperCase());
+					});
+					return string_new.join(' ');
+				}
+			}
+			
+			//Validar caracteres
+			function validateStringsAllowed(string) {
+				let re = /^(1|2)$/; //Permite o el 1 o el 2
+				return re.test(string);
+			}
+			
+			//Detenemos el envio de el formulario y en su lugar ejecutamos una funcion javascrip;
+			document.getElementById('form_datos').addEventListener('submit', function(event) {
+				event.preventDefault();
+				//Capturamos los datos de los campos del formulario
+				let name     = document.getElementById('input_name').value;
+				let age      = document.getElementById('input_age').value;
+				let languaje = document.getElementById('input_languaje').value;
+				//Creamos el mensaje de bienvenida
+				let mensaje  = `Hola ${convertStringUppercase(name)}, tienes ${age} años y ya estás aprendiendo ${convertStringUppercase(languaje)}!`;
+				//mostramos el mensaje como alerta
+				alert(mensaje);
+				//Cremalos la pregunta
+				let pregunta = `¿Te gusta estudiar ${convertStringUppercase(languaje)}? Responde con el número 1 para SÍ o 2 para NO.`;
+				let respuesta= prompt(pregunta);
+				//Validamos el input del usuario
+				if(validateStringsAllowed(respuesta)) {
+					//imprimimos mensaje segun la respuesta
+					if(respuesta == '1') {
+						alert('¡Muy bien! Sigue estudiando y tendrás mucho éxito.');
+					} else {
+						alert('Oh, qué pena... ¿Ya intentaste aprender otros lenguajes?');
+					}
+				} else {
+					alert('Ingresaste un caracter no permitido, recuerda que es con el número 1 para SÍ o 2 para NO.');
+				}
+			});
+		</script>
+	</body>
+</html>
