@@ -1,0 +1,31 @@
+<script type="text/javascript">
+    /*
+    * Adivina el numero
+    */
+
+    //Varibales
+    let numero_secreto  = generarNumeroAleatorio();
+    let numero_intentos = 3;
+    let numero_jugador  = 0;
+
+    //Genera numero aleatorio
+    function generarNumeroAleatorio() {
+        return Math.floor(Math.random() * (10 - 1 + 1) + 1)
+    }
+
+    //Ciclo para pedir numero al jugador
+    let intentos = 0;
+    while (intentos < numero_intentos) {
+        let intestos_restantes = numero_intentos - intentos;
+        alert(`Juego, Adivina el numero del 1 al 10, tienes ${intestos_restantes} intentos.`);
+        numero_jugador = prompt('Ingresa un numero:');
+        if(numero_jugador == numero_secreto) {
+            alert(`Felicitaciones, adivinaste el numero : ${numero_secreto}`);
+            break;
+        }
+        intentos++;
+        if(intentos == 3) {
+            alert(`Game over, no adivinaste el numero : ${numero_secreto}, intenta de nuevo.`);
+        }
+    }
+</script>
