@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF8">
+		<title>Day 3, Code</title>
+	</head>
+	<style type="text/css">
+		body{
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+		
+		p {
+			text-align: center;
+		}
+
+		form {
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			width: 350px;
+			text-align: center;
+		}
+
+		input, select {
+			width: 100%;
+			padding: 10px;
+			margin: 10px 0;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-sizing: border-box;
+			font-size: 14px;
+		}
+
+		input, select:focus {
+			border-color: #007BFF;
+			outline: none;
+			box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+		}
+			
+		button {
+			width: 100%;
+			padding: 10px;
+			margin-top: 10px;
+			background-color: #007BFF;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: #0056b3;
+		}
+	</style>
+	<body>
+		<main>
+			<p><strong>Day 3, Code, Javascript, AluraLatam.</strong></p>
+			<form>
+				<p id="p_msg"><strong>Escoge el area que te gustaria seguir</strong></p>
+				<select id="select_opcion">
+                    <option value="Front-End">Front-End</option>
+                    <option value="Back-End">Back-End</option>
+                </select>
+                <button id="btn_continuar" type="button">Continuar</button>
+			</form>
+		</main>
+		<footer></footer>
+		<script type="text/javascript">
+            //Varibales
+            let nivel    = 1;
+            let p        = document.getElementById('p_msg');
+            let select   = document.getElementById('select_opcion');
+            let boton    = document.getElementById('btn_continuar');
+            let area     = '';
+            let lenguaje = '';
+            let especial = 0;
+            
+            //Eventro click en boton
+			boton.addEventListener('click', function() {
+                //Realizamos accion segun el nivel
+                if (nivel == 1) {
+                    nivel = 2;
+                    area = select.value;
+                    p.innerHTML = '<strong>¿Quieres aprender?</strong>';
+                    if(area === 'Front-End') {
+                    select.innerHTML = '<option value="React">React</option><option value="Vue">Vue</option>';
+                    } else if(area === 'Back-End') {
+                        select.innerHTML = '<option value="C#">C#</option><option value="Java">Java</option>';
+                    }
+                } else if(nivel == 2) {
+                    nivel = 3;
+                    lenguaje = select.value;
+                    p.innerHTML = '<strong>¿Quieres hacer?</strong>';
+                    select.innerHTML = 
+                    `<option value="1">Seguir especializandose en ${lenguaje}</option>
+                     <option value="2">desarrollarse para convertirse en Fullstack.</option>`;
+                } else if(nivel == 3) {
+                    especial = select.value;
+                    select.remove();
+                    boton.remove();
+                    
+                    if(especial == 1) {
+                        p.innerHTML = `<strong>¡Excelente!</strong>, has escogido seguir especializándote en ${lenguaje} para ser un gran desarrollador <strong>${area}</strong>.`;
+                    } else if(especial == 2) {
+                        p.innerHTML = `<strong>¡Excelente!</strong>, has escogido ser un desarrollador <strong>Full-Stack</strong>, recuerda que debes aprender otros lenguajes aparte de ${lenguaje}`;
+                    }
+
+                    // Ejemplo usando async/await para manejar el prompt
+                    async function mostrarPromptAsincrono() {
+                        let respuesta = await new Promise((resolve) => {
+                            setTimeout(() => {
+                                let respuesta = prompt('¿Hay alguna otra tecnología que te gustaría aprender?, Escribe [ok] para continuar.');
+                                        while (respuesta == "ok") {
+                                            let tecnologia = prompt('Escribe el nombre de la tecnologia:');
+                                            alert(`${tecnologia} es una herramienta para construir el futuro. ¡Sigue adelante!`);
+                                            respuesta = prompt('¿Hay alguna otra tecnología que te gustaría aprender?, Escribe [ok] para continuar.');
+                                        }
+                            }, 0);
+                        });
+                    }
+                    mostrarPromptAsincrono();
+                }
+			});
+		</script>
+	</body>
+</html>
