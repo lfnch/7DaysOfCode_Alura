@@ -1,5 +1,6 @@
 # 7DaysOfCode_Alura
 Reto de 7 dias, logica de programacion AluraLatam
+https://app.aluracursos.com/
 
 # Dia 1
 Existe una situación muy común para quienes usan Javascript: 
@@ -52,8 +53,6 @@ if (COMPARAR numeroDiez y stringDiez) {
 } else {
   console.log('Las variables numeroDiez y stringDiez no tienen el mismo valor')
 }
-
-https://app.aluracursos.com/
 
 # Dia 2
 
