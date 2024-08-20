@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF8">
+		<title>Day 6, Code</title>
+	</head>
+	<style type="text/css">
+		body{
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+		
+		p {
+			text-align: center;
+		}
+
+		form {
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			width: 350px;
+			text-align: center;
+		}
+
+		input, select {
+			width: 100%;
+			padding: 10px;
+			margin: 10px 0;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-sizing: border-box;
+			font-size: 14px;
+		}
+
+		input, select:focus {
+			border-color: #007BFF;
+			outline: none;
+			box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+		}
+			
+		button {
+			width: 100%;
+			padding: 10px;
+			margin-top: 10px;
+			background-color: #007BFF;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: #0056b3;
+		}
+	</style>
+	<body>
+		<main>
+			<p><strong>Day 6, Code, Javascript, AluraLatam.</strong></p>
+			<form>
+				<p><strong>Agregar items</strong></p>
+                <label>Item : </label>
+                <input  id="input_item" type="text" placeholder="Ingrese el producto">
+                <label>Categoria : </label>
+                <select id="select_categoria"></select>
+                <button id="btn_agregar" type="button">Agregar a la lista</button>
+                <p><strong>Lista de compras</strong></p>
+                <div id="div_lista" style="justify-content: left; text-align: left;"></div>
+			</form>
+		</main>
+		<footer></footer>
+
+        <!--Codigo-->
+		<script type="text/javascript">
+
+            /*Objectos html*/
+            const input_item       = document.getElementById('input_item');
+            const select_categoria = document.getElementById('select_categoria');
+            const button_boton     = document.getElementById('btn_agregar');
+            const div_lista        = document.getElementById('div_lista');
+
+            /*Variables*/
+            const CATEGORIAS    = ['frutas', 'lácteos', 'congelados', 'dulces', 'otros'];
+            const LISTA_COMPRAS = new Object;
+
+            function convertirCadenaMayusculas(cadena) {
+                if(cadena != '') {
+                    return cadena.trim().toUpperCase();
+                }
+            }
+
+            function cargarSelectCategorias() {
+                let salida_html = '';
+                CATEGORIAS.sort();
+                CATEGORIAS.forEach(categoria => {
+                    salida_html += `<option value="${categoria}">${convertirCadenaMayusculas(categoria)}</option>`;
+                });
+                select_categoria.innerHTML = salida_html;
+            }
+
+            function eliminarItem(categoria, index_item) {
+                let eliminar = confirm("¿Eliminar item?")
+                if(eliminar) {
+                    LISTA_COMPRAS[categoria].splice(index_item, 1);
+                    mostrarLista();
+                }
+            }
+
+            function mostrarLista() {
+                let salida_html  = '';
+                //Recorremos el objecto para imprimir en pantalla las categorias y los items por estas
+                //Categorias
+                Object.entries(LISTA_COMPRAS).forEach(([llave, items]) => {
+                    if(items.length > 0) {
+                        let li = ``;
+                        let ul = ``;
+                        //Recorremos los items y convertimos en li html
+                        items.forEach((e, i) => { li += `<li>${e} >> <a href="javascript:eliminarItem('${llave}', ${i})">Eliminar</a></li>`});
+                        ul = `<p>${convertirCadenaMayusculas(llave)}<p><ul>${li}</ul>`;
+                        salida_html += ul;
+                    }
+                });
+                //Mostramos el contenido en pantalla
+                div_lista.innerHTML = salida_html;
+            }
+            
+            /**/
+            cargarSelectCategorias();
+            button_boton.addEventListener('click', function() {
+                const item      = input_item.value;
+                const categoria = select_categoria.value;
+                
+                //Validamos campo vacio
+                if(item.trim() != '') {
+                    //Validamos que exista la categoria en el objecto lista
+                    if(LISTA_COMPRAS.hasOwnProperty(categoria)) {
+                        //Validamos que no exista el item en la lista
+                        if(!LISTA_COMPRAS[categoria].includes(item)) {
+                            //Agragamos el item en la categoria correspondiente
+                            LISTA_COMPRAS[categoria].push(item);
+                        } else {
+                            alert('Ya existe el item para esa categoria.');
+                        }
+                    } else {
+                        //Creamos la clave categoria y le agregamos el item
+                        LISTA_COMPRAS[categoria] = new Array(item);
+                    }
+                    input_item.value = '';
+                    mostrarLista();
+                } else {
+                    alert('Ingrese el nombre de un item y seleccione la categoria.');
+                }
+            });
+		</script>
+	</body>
+</html>
+
+
