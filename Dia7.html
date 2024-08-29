@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF8">
+		<title>Day 7, Code</title>
+	</head>
+	<style type="text/css">
+		body{
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+		
+		p {
+			text-align: center;
+		}
+
+		#form {
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			width: 350px;
+			text-align: center;
+		}
+
+		input, select {
+			width: 100%;
+			padding: 10px;
+			margin: 10px 0;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-sizing: border-box;
+			font-size: 18px;
+			text-align:right;
+		}
+
+		input, select:focus {
+			border-color: #007BFF;
+			outline: none;
+			box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+		}
+			
+		button {
+			width: 100%;
+			padding: 10px;
+			margin-top: 10px;
+			background-color: #cac8c7;
+			color: black;
+			border: none;
+			border-radius: 5px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: #f3eeed;
+		}
+	</style>
+	<body>
+		<main>
+			<p><strong>Day 7, Code, Javascript, AluraLatam.</strong></p>
+			<div id="form">
+				<p><strong>Calculadora</strong></p>
+                <input  id="input_formula" type="text" placeholder="Ingrese una formula" readonly>
+				<table style="width:100%">
+					<tr>
+						<td><button onclick="leerComando(1)"> 1 </button></td>
+						<td><button onclick="leerComando(2)"> 2 </button></td>
+						<td><button onclick="leerComando(3)"> 3 </button></td>
+						<td><button onclick="leerComando('+')"> + </button></td>
+					</tr>
+					<tr>
+						<td><button onclick="leerComando(4)"> 4 </button></td>
+						<td><button onclick="leerComando(5)"> 5 </button></td>
+						<td><button onclick="leerComando(6)"> 6 </button></td>
+						<td><button onclick="leerComando('-')"> - </button></td>
+					</tr>
+					<tr>
+						<td><button onclick="leerComando(7)"> 7 </button></td>
+						<td><button onclick="leerComando(8)"> 8 </button></td>
+						<td><button onclick="leerComando(9)"> 9 </button></td>
+						<td><button onclick="leerComando('*')"> * </button></td>
+					</tr>
+					<tr>
+						<td><button onclick="leerComando(0)"> 0 </button></td>
+						<td colspan="2" onclick="leerComando('=')"><button> = </button></td>
+						<td><button onclick="leerComando('/')"> / </button></td>
+					</tr>
+				</table>
+			</div>
+		</main>
+		<footer></footer>
+
+        <!--Codigo-->
+		<script type="text/javascript">
+			
+			function mostrarEnInput(texto) {
+				const INPUT = document.getElementById('input_formula');
+				INPUT.value = texto;
+			}
+			
+			function leerInput() {
+				const INPUT = document.getElementById('input_formula');
+				return INPUT.value;
+			}
+			
+			function esNumero (caracter) {
+				const ER = /^\d$/;
+				return ER.test(caracter);
+			}
+			
+			function textoContieneOperador(texto) {
+				const ER = /[+\-*/]/;
+				for(i = 0; i < texto.length; i++) {
+					return ER.test(texto);
+				}
+			}
+			
+			function sumar(n1 , n2) {
+				return parseInt(n1) + parseInt(n2);
+			}
+
+			function restar(n1 , n2) {
+				return parseInt(n1) - parseInt(n2);
+			}
+			
+			function multiplicar(n1 , n2) {
+				return parseInt(n1) * parseInt(n2);
+			}
+			
+			function dividir(n1 , n2) {
+				return parseInt(n1) / parseInt(n2);
+			}
+			
+			
+			function leerComando(caracter) {
+				let texto = leerInput();
+				if(esNumero(caracter)) {
+					texto += caracter;
+				} else {
+					if(caracter == '=') {
+						const ER = /[+\-*/]/;
+						const OPERADOR = texto.match(ER);
+						if(OPERADOR != null) {
+							const NUMEROS  = texto.split(OPERADOR[0]);
+							switch(OPERADOR[0]) {
+								case '+' :
+									texto = sumar(NUMEROS[0], NUMEROS[1]);
+								break;
+								case '-' :
+									texto = restar(NUMEROS[0], NUMEROS[1]);
+								break;
+								case '*' :
+									texto = multiplicar(NUMEROS[0], NUMEROS[1]);
+								break;
+								case '/' :
+									texto = dividir(NUMEROS[0], NUMEROS[1]);
+								break;
+							}
+						}
+					} else if(!textoContieneOperador(texto)){
+						texto += caracter;
+					}
+				}
+				mostrarEnInput(texto);
+			}
+		</script>
+	</body>
+</html>
+
